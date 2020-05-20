@@ -17,7 +17,9 @@ class RequestLogListTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_index_host_details(self):
-        pass
+        response = self.client.get(self.path)
+        assert 'date' in response.data
+        assert 'cpuinfo' in response.data
 
 class RequestLogDetailTest(TestCase):
     def test_api_get(self):
