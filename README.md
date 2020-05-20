@@ -2,6 +2,8 @@
 
 To run: requires docker and docker-compose. Download / pull repository and run `docker-compose up` from directory.
 
+To write (edit comments with POST requests), login with or authenticate with user: 'username' password: 'password'
+
 ## Table of Contents
 1. [Task Requirements](https://github.com/nixonbali/hostrest#task-requirements)
 2. [Build Plan](https://github.com/nixonbali/hostrest#build-plan)
@@ -60,6 +62,6 @@ Note: using 'requestlog' as app and class name to avoid confusion with django re
 `docker-compose run web python manage.py test`
 
 ### Creating Superuser
-`docker-compose run web python manage.py createsuperuser`
-`username`
+`docker-compose run web python manage.py createsuperuser` \
+`username` \
 `password`
