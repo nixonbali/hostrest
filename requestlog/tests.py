@@ -2,7 +2,7 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 from django.urls import reverse
 
-class RequestLogTest(TestCase):
+class RequestLogListTest(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.path = reverse("requestlog-list")
@@ -15,3 +15,29 @@ class RequestLogTest(TestCase):
     def test_index_status(self):
         response = self.client.get(self.path)
         self.assertEqual(response.status_code, 200)
+
+    def test_index_host_details(self):
+        pass
+
+class RequestLogDetailTest(TestCase):
+    def test_api_get(self):
+        self.factory = APIRequestFactory()
+        self.path = 'api'
+        _request = self.factory.get(reverse("requestlog-list"))
+        _response = request_list(_request)
+        request = self.factory.get(self.path)
+        response = request_detail(request, pk=1)
+        ## Status Code
+        self.assertEqual(response.status_code, 200)
+
+    def test_api_get(self):
+        pass
+
+    def test_api_post(self):
+        pass
+
+    def test_api_put(self):
+        pass
+
+    def test_api_delete(self):
+        pass
