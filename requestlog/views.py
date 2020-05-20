@@ -13,6 +13,7 @@ class RequestLogViewSet(mixins.RetrieveModelMixin,
 
     queryset = RequestLog.objects.all()
     serializer_class = RequestLogSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def list(self, request):
         """

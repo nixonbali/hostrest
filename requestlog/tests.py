@@ -1,7 +1,10 @@
 from django.test import TestCase
-from rest_framework.test import APIClient, APIRequestFactory
+from rest_framework.test import APIClient, APIRequestFactory, force_authenticate
 from django.urls import reverse
 from requestlog.urls import request_list, request_detail
+from django.contrib.auth.models import User
+
+ADMIN = User.objects.all()[0]
 
 class RequestLogListTest(TestCase):
     def setUp(self):
@@ -49,6 +52,7 @@ class RequestLogDetailTest(TestCase):
 
     def test_api_post_success(self):
         request = self.factory.post(self.path, {'comment':'test comment'})
+        force_authenticate(request, user=ADMIN)
         response = request_detail(request, pk=1)
 
         ## Status Code
@@ -60,21 +64,25 @@ class RequestLogDetailTest(TestCase):
     def test_api_post_failure(self):
         ## Attempt to update nonexistent field
         request = self.factory.post(self.path, {'comment1':'test comment'})
+        force_authenticate(request, user=ADMIN)
         response = request_detail(request, pk=1)
         self.assertEqual(response.status_code, 400)
 
     def test_api_put_with_content(self):
         request = self.factory.put(self.path, {'comment': 'test put comment'})
+        force_authenticate(request, user=ADMIN)
         response = request_detail(request, pk=1)
         self.assertEqual(response.status_code, 405)
 
     def test_api_put_no_content(self):
         request = self.factory.put(self.path)
+        force_authenticate(request, user=ADMIN)
         response = request_detail(request, pk=1)
         self.assertEqual(response.status_code, 405)
 
     def test_api_delete_existing(self):
         request = self.factory.delete(self.path)
+        force_authenticate(request, user=ADMIN)
         response = request_detail(request, pk=1)
         self.assertEqual(response.status_code, 200)
         ## Double Check Deletion with Get Test
@@ -84,5 +92,6 @@ class RequestLogDetailTest(TestCase):
 
     def test_api_delete_nonexisting(self):
         request = self.factory.delete(self.path)
+        force_authenticate(request, user=ADMIN)
         response = request_detail(request, pk=2)
         self.assertEqual(response.status_code, 400)
