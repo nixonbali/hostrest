@@ -1,4 +1,14 @@
-## Host Rest
+# Host Rest
+
+To run: requires docker and docker-compose. Download / pull repository and run `docker-compose up` from directory.
+
+## Table of Contents
+1. [Task Requirements](https://github.com/nixonbali/hostrest#task-requirements)
+2. [Build Plan](https://github.com/nixonbali/hostrest#build-plan)
+3. [Build Log](https://github.com/nixonbali/hostrest#build-log)
+
+
+## Task Requirements
 Basic REST API enabling CRUD operations with respect to basic information about the host system.
 
 - Django App
@@ -31,23 +41,25 @@ Basic REST API enabling CRUD operations with respect to basic information about 
 
 ## Build Log
 
+Notes taken while coding
+
 ### Initial Setup
 `docker-compose run web django-admin startproject hostrest .`
 `docker-compose run web python manage.py startapp requestlog`
 
 Note: using 'requestlog' as app and class name to avoid confusion with django request object
 
-## Upon Requestlog Model Definition
+### Upon Requestlog Model Definition
 `docker-compose run web python manage.py makemigrations requestlog`
 `docker-compose run web python manage.py migrate`
 
-## To Run
+### To Run
 `docker-compose up`
 
 ### Testing
 `docker-compose run web python manage.py test`
 
-## Creating Superuser
+### Creating Superuser
 `docker-compose run web python manage.py createsuperuser`
 `username`
 `password`
