@@ -1,6 +1,7 @@
 from django.test import TestCase
-from rest_framework.test import APIClient
+from rest_framework.test import APIClient, APIRequestFactory
 from django.urls import reverse
+from requestlog.urls import request_list, request_detail
 
 class RequestLogListTest(TestCase):
     def setUp(self):
@@ -20,6 +21,7 @@ class RequestLogListTest(TestCase):
         response = self.client.get(self.path)
         assert 'date' in response.data
         assert 'cpuinfo' in response.data
+        
 
 class RequestLogDetailTest(TestCase):
     def test_api_get(self):
@@ -31,9 +33,6 @@ class RequestLogDetailTest(TestCase):
         response = request_detail(request, pk=1)
         ## Status Code
         self.assertEqual(response.status_code, 200)
-
-    def test_api_get(self):
-        pass
 
     def test_api_post(self):
         pass
