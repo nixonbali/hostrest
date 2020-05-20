@@ -28,3 +28,9 @@ Basic REST API enabling CRUD operations with respect to basic information about 
 - superuser can write, else all pages read-only
 - sqlite db saved in directory for ease of sharing (will need superuser, minimal requests while building/testing may be committed)
 - unittest all routes
+
+## Build Log
+
+### Initial Setup
+`docker-compose run web django-admin startproject hostrest .`
+`docker-compose run web python manage.py startapp requestlog`
