@@ -43,3 +43,6 @@ Note: using 'requestlog' as app and class name to avoid confusion with django re
 
 ## To Run
 `docker-compose up`
+
+### Testing
+`docker-compose run web python manage.py test`
