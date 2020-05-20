@@ -34,3 +34,9 @@ Basic REST API enabling CRUD operations with respect to basic information about 
 ### Initial Setup
 `docker-compose run web django-admin startproject hostrest .`
 `docker-compose run web python manage.py startapp requestlog`
+
+Note: using 'requestlog' as app and class name to avoid confusion with django request object
+
+## Upon Requestlog Model Definition
+`docker-compose run web python manage.py makemigrations requestlog`
+`docker-compose run web python manage.py migrate`
