@@ -40,3 +40,6 @@ Note: using 'requestlog' as app and class name to avoid confusion with django re
 ## Upon Requestlog Model Definition
 `docker-compose run web python manage.py makemigrations requestlog`
 `docker-compose run web python manage.py migrate`
+
+## To Run
+`docker-compose up`
