@@ -21,18 +21,31 @@ class RequestLogListTest(TestCase):
         response = self.client.get(self.path)
         assert 'date' in response.data
         assert 'cpuinfo' in response.data
-        
+
 
 class RequestLogDetailTest(TestCase):
-    def test_api_get(self):
+    def setUp(self):
+        """Initializes factory and populates test db with single request"""
         self.factory = APIRequestFactory()
         self.path = 'api'
         _request = self.factory.get(reverse("requestlog-list"))
         _response = request_list(_request)
+
+    def test_api_get_found_status(self):
         request = self.factory.get(self.path)
         response = request_detail(request, pk=1)
-        ## Status Code
         self.assertEqual(response.status_code, 200)
+
+    def test_api_get_found_comment(self):
+        request = self.factory.get(self.path)
+        response = request_detail(request, pk=1)
+        assert 'comment' in response.data
+        self.assertEqual(response.data['comment'], None)
+
+    def test_api_get_not_found(self):
+        request = self.factory.get(self.path)
+        response = request_detail(request, pk=2)
+        self.assertEqual(response.status_code, 404)
 
     def test_api_post(self):
         pass
