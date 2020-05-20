@@ -63,8 +63,15 @@ class RequestLogDetailTest(TestCase):
         response = request_detail(request, pk=1)
         self.assertEqual(response.status_code, 400)
 
-    def test_api_put(self):
-        pass
+    def test_api_put_with_content(self):
+        request = self.factory.put(self.path, {'comment': 'test put comment'})
+        response = request_detail(request, pk=1)
+        self.assertEqual(response.status_code, 405)
+
+    def test_api_put_no_content(self):
+        request = self.factory.put(self.path)
+        response = request_detail(request, pk=1)
+        self.assertEqual(response.status_code, 405)
 
     def test_api_delete_existing(self):
         request = self.factory.delete(self.path)
