@@ -46,3 +46,8 @@ Note: using 'requestlog' as app and class name to avoid confusion with django re
 
 ### Testing
 `docker-compose run web python manage.py test`
+
+## Creating Superuser
+`docker-compose run web python manage.py createsuperuser`
+`username`
+`password`
