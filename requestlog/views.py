@@ -51,3 +51,15 @@ class RequestLogViewSet(mixins.RetrieveModelMixin,
         (response.data['comment'] != request.data['comment']):
             response.status_code = status.HTTP_400_BAD_REQUEST
         return response
+
+    def destroy(self, request, pk=None):
+        """Deletes or Raises 400"""
+        try:
+            response = super().destroy(request, pk)
+        except:
+            content = {'Error': 'Cannot Remove what does not exist'}
+            response = Response(content, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            response.status_code = status.HTTP_200_OK
+        finally:
+            return response

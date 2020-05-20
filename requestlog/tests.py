@@ -66,5 +66,16 @@ class RequestLogDetailTest(TestCase):
     def test_api_put(self):
         pass
 
-    def test_api_delete(self):
-        pass
+    def test_api_delete_existing(self):
+        request = self.factory.delete(self.path)
+        response = request_detail(request, pk=1)
+        self.assertEqual(response.status_code, 200)
+        ## Double Check Deletion with Get Test
+        get_request = self.factory.get(self.path)
+        response = request_detail(get_request, pk=1)
+        self.assertEqual(response.status_code, 404)
+
+    def test_api_delete_nonexisting(self):
+        request = self.factory.delete(self.path)
+        response = request_detail(request, pk=2)
+        self.assertEqual(response.status_code, 400)
