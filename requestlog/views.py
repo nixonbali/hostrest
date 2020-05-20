@@ -1,4 +1,4 @@
-from rest_framework import viewsets, mixins
+from rest_framework import viewsets, mixins, permissions, status
 from rest_framework.response import Response
 from requestlog.models import RequestLog
 from requestlog.serializers import RequestLogSerializer
@@ -9,12 +9,17 @@ class RequestLogViewSet(mixins.RetrieveModelMixin,
                         mixins.UpdateModelMixin,
                         mixins.DestroyModelMixin,
                         viewsets.GenericViewSet):
+    """RequestLog ViewSet for Listing, Retrieving, Updating, and Deleting"""
 
     queryset = RequestLog.objects.all()
     serializer_class = RequestLogSerializer
 
     def list(self, request):
-
+        """
+        Logs new request
+        Displays Host Info
+        Lists 10 most recent requests
+        """
         ## Logs Request
         new_entry = RequestLogSerializer(data={'type':'GET'})
         if new_entry.is_valid():
@@ -37,3 +42,12 @@ class RequestLogViewSet(mixins.RetrieveModelMixin,
         serializer = RequestLogSerializer(queryset, many=True, context={'request': request})
 
         return Response({'requests': serializer.data, 'date': date, 'cpuinfo': cpuinfo})
+
+    def update(self, request, pk=None):
+        """Updates Comment or Raises 400"""
+        response = super().update(request, pk)
+        if ('comment' not in request.data) or \
+        ('comment' not in response.data) or \
+        (response.data['comment'] != request.data['comment']):
+            response.status_code = status.HTTP_400_BAD_REQUEST
+        return response

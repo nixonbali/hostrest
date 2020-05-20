@@ -47,8 +47,21 @@ class RequestLogDetailTest(TestCase):
         response = request_detail(request, pk=2)
         self.assertEqual(response.status_code, 404)
 
-    def test_api_post(self):
-        pass
+    def test_api_post_success(self):
+        request = self.factory.post(self.path, {'comment':'test comment'})
+        response = request_detail(request, pk=1)
+
+        ## Status Code
+        self.assertEqual(response.status_code, 200)
+
+        ## Comment Value
+        self.assertEqual(response.data['comment'], 'test comment')
+
+    def test_api_post_failure(self):
+        ## Attempt to update nonexistent field
+        request = self.factory.post(self.path, {'comment1':'test comment'})
+        response = request_detail(request, pk=1)
+        self.assertEqual(response.status_code, 400)
 
     def test_api_put(self):
         pass
